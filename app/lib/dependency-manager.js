@@ -1,11 +1,11 @@
 'use strict';
 
 var RSVP = require('rsvp');
-var DepRef = require('./dep-ref');
 
 module.exports = DependencyManager;
 
-function DependencyManager() {
+function DependencyManager(DepRef) {
+  this.DepRef = DepRef || require('./dep-ref');
   this.deps = {};
 }
 
@@ -13,7 +13,7 @@ DependencyManager.prototype.findPeerDependencies = function(depName) {
   var manager = this;
   var deps = this.deps;
 
-  return new DepRef(depName).peerDependencies().then(function(data) {
+  return new this.DepRef(depName).peerDependencies().then(function(data) {
     if (deps[depName]) {
       throw new Error('something went wrong, should not re-encounter the same dep: ' + depName);
     }
@@ -24,7 +24,7 @@ DependencyManager.prototype.findPeerDependencies = function(depName) {
     var res = Object.keys(data).map(function(name) {
       var depName = name + '@' + data[name];
 
-      return new DepRef(depName).peerDependencies().then(function(peers) {
+      return new manager.DepRef(depName).peerDependencies().then(function(peers) {
         deps[depName] = {};
 
         var moreWork = Object.keys(peers || {}).map(function(peer) {
