@@ -31,7 +31,6 @@ describe('parse-module-name', function() {
       version: '3.0.17'
     });
   });
-
 });
 
 describe('DepRef', function() {
@@ -39,16 +38,73 @@ describe('DepRef', function() {
     return load();
   });
 
+  describe('extractInfo', function() {
+    it('works with nothing found', function() {
+      expect(DepRef.extractInfo({})).to.be.null;
+    });
 
-  it('exists', function() {
-    return new DepRef(info, '@stefanpenner/a').getInfo().then(function(a) {
-      expect(a).to.be.a('object');
-      expect(a['1.0.2']).to.be.a('object');
-      expect(a['1.0.2'].name).to.eql('@stefanpenner/a');
-      expect(a['1.0.2'].peerDependencies).to.eql({
-        '@stefanpenner/b': '^1.0.0'
+    it('works with nothing found', function() {
+      var result = {};
+      expect(DepRef.extractInfo({
+        '1.0.0': result
+      })).to.equal(result);
+    });
+
+    it('works with splat version (chooses greatest version)', function() {
+      var result = {};
+      expect(DepRef.extractInfo({
+        '0.9.0': 1,
+        '1.0.0': 2,
+        '1.0.1': result
+      }, '*')).to.equal(result);
+    });
+
+    it('works with explicit version', function() {
+      var result = {};
+      expect(DepRef.extractInfo({
+        '0.9.0': 1,
+        '1.0.0': 2,
+        '1.0.1': result
+      }, '1.0.1')).to.equal(result);
+    });
+  });
+
+  describe('getInfo', function() {
+    it('works WITHOUT version', function() {
+      return new DepRef('@stefanpenner/a').getInfo().then(function(a) {
+        expect(a).to.be.a('object');
+        expect(a.version).to.eql('1.0.2');
+        expect(a.name).to.eql('@stefanpenner/a');
+        expect(a.peerDependencies).to.eql({
+          '@stefanpenner/b': '^1.0.0'
+        });
       });
-      console.log(a);
+    });
+
+    it('works WITH version', function() {
+      return new DepRef('@stefanpenner/a@1.0.0').getInfo().then(function(a) {
+        expect(a).to.be.a('object');
+
+        expect(a).to.be.a('object');
+        expect(a.version).to.eql('1.0.0');
+        expect(a.name).to.eql('@stefanpenner/a');
+        expect(a.peerDependencies).to.eql({
+          '@stefanpenner/b': '^1.0.0'
+        });
+      });
+    });
+
+    it('works WITH range version', function() {
+      return new DepRef('@stefanpenner/a@^1.0.0').getInfo().then(function(a) {
+        expect(a).to.be.a('object');
+
+        expect(a).to.be.a('object');
+        expect(a.version).to.eql('1.0.2');
+        expect(a.name).to.eql('@stefanpenner/a');
+        expect(a.peerDependencies).to.eql({
+          '@stefanpenner/b': '^1.0.0'
+        });
+      });
     });
   });
 });

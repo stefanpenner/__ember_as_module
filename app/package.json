@@ -13,7 +13,8 @@
   "dependencies": {
     "@stefanpenner/a": "^1.0.0",
     "pleasant-progress": "^1.1.0",
-    "rsvp": "^3.0.21"
+    "rsvp": "^3.0.21",
+    "semver": "^5.0.1"
   },
   "devDependencies": {
     "chai": "^3.2.0",

@@ -1,6 +1,8 @@
-
 module.exports = function parseModuleName(name) {
-  var parsed = name.match(/(@?[^@]+)@?(.+)?/)
+  if (typeof name !== 'string') {
+    throw new TypeERror('parseModuleName requires string input');
+  }
+  var parsed = name.match(/(@?[^@]+)@?(.+)?/);
 
   return {
     name: parsed[1],
