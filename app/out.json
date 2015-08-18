@@ -1,0 +1,32 @@
+ 
+{
+  "name": "@stefanpenner/a",
+  "dist-tags": {
+    "latest": "1.0.0"
+  },
+  "versions": "1.0.0",
+  "maintainers": "stefanpenner <stefan.penner@gmail.com>",
+  "time": {
+    "modified": "2015-08-17T22:40:20.281Z",
+    "created": "2015-08-17T22:40:20.281Z",
+    "1.0.0": "2015-08-17T22:40:20.281Z"
+  },
+  "license": "ISC",
+  "readmeFilename": "",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "peerDependencies": {
+    "@stefanpenner/b": "^1.0.0"
+  },
+  "dist": {
+    "shasum": "dac46c67822e5fd06a8f63125623446b415cf7e4",
+    "tarball": "http://registry.npmjs.org/@stefanpenner/a/-/a-1.0.0.tgz"
+  },
+  "directories": {}
+}
+
