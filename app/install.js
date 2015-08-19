@@ -4,6 +4,7 @@ var depName  = process.argv[2];
 var PleasantProgress = require('pleasant-progress');
 var DependencyManager = require('./lib/dependency-manager');
 var progress = new PleasantProgress();
+var install = require('./lib/install');
 
 if (!depName) { throw TypeError("usage: install <name>"); }
 
@@ -14,7 +15,7 @@ manager.findPeerDependencies(depName).
   finally(function() {
     progress.stop();
   }).then(function() {
-    console.log(Object.keys(manager.deps));
+    return install(Object.keys(manager.deps));
   }).catch(function(e) {
     console.log('OMG FAILURE');
     console.error(e.message);
