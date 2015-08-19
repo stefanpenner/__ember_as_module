@@ -14,7 +14,7 @@ manager.findPeerDependencies(depName).
   finally(function() {
     progress.stop();
   }).then(function() {
-    console.log(manager.deps);
+    console.log(Object.keys(manager.deps));
   }).catch(function(e) {
     console.log('OMG FAILURE');
     console.error(e.message);
