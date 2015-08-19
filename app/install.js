@@ -5,6 +5,8 @@ var PleasantProgress = require('pleasant-progress');
 var DependencyManager = require('./lib/dependency-manager');
 var progress = new PleasantProgress();
 
+if (!depName) { throw TypeError("usage: install <name>"); }
+
 progress.start('loading');
 var manager = new DependencyManager();
 
